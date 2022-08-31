@@ -1,0 +1,20 @@
+[package]
+name = "rport"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+"pnet" = "0.31.0"
+"pnet_datalink" = "0.31.0"
+"to-binary" = "0.4.0"
+"winreg" = "0.10.1"
+
+[[bin]]
+name = "rport"
+path = "src/main.rs"
+
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+# //32-bit build cargo build --target=x86_64-pc-windows-msvc --release
+# clear && cargo build --release && cargo build --target=x86_64-pc-windows-msvc --release
