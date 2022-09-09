@@ -22,12 +22,16 @@ fn main() {
 
     let nic = Nic::new();
 
+    println!("");
+
     // First try FDP for more details vlan information.
+    print!("FDP | ");
     nic.listen_wired(Duration::from_secs(62), |bytes| {
         if let Some(packet) = EthernetPacket::new(bytes) {
             match packet.get_destination().octets() {
                 // FDP
                 [0x01, 0xE0, 0x52, 0xCC, 0xCC, 0xCC] => {
+                    println!("Found FDP Packet...");
                     handle_fdp(bytes);
                 }
                 _ => {}
@@ -36,17 +40,21 @@ fn main() {
     });
 
     // Try LLDP if FDP doesn't work.
+    print!("LLDP | ");
     nic.listen_wired(Duration::from_secs(32), |bytes| {
         if let Some(packet) = EthernetPacket::new(bytes) {
             match packet.get_destination().octets() {
                 // LLDP
                 [0x01, 0x80, 0xC2, 0x00, 0x00, 0x0E] => {
+                    println!("Found LLDP Packet...");
                     handle_lldp(bytes);
                 }
                 _ => {}
             }
         }
     });
+
+    println!("");
 }
 
 fn handle_fdp(bytes: &[u8]) {

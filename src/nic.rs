@@ -55,7 +55,9 @@ impl Nic {
                 }
             };
 
-            println!("\nListening on \"{}\"\n", Self::interface_string(interface));
+            println!("Listening on \"{}\"", Self::interface_string(interface));
+            println!("[Ctrl + C to stop...]");
+            println!("");
 
             // Listen for the given duration.
             let start = Instant::now();
