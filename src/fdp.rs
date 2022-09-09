@@ -124,6 +124,10 @@ impl<'a> FdpPdu<'a> {
         switch
     }
 
+    pub fn switch_display(&self) -> String {
+        self.switch_name.to_string()
+    }
+
     /// Return the VLANs in a String separated by a comma if there is
     /// more than one.
     pub fn vlan(&self) -> String {
@@ -133,7 +137,7 @@ impl<'a> FdpPdu<'a> {
         }
         if self.switch_vlan_v.len() > 0 {
             if vlan.len() > 0 {
-                vlan.push_str(",");
+                vlan.push_str(", ");
             }
             vlan.push_str(&self.switch_vlan_v);
         }

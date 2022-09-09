@@ -21,15 +21,15 @@ pub fn print_hklm(path: &'static str) {
     let hklm = RegKey::predef(HKEY_LOCAL_MACHINE);
 
     if let Ok(key) = hklm.open_subkey(path) {
-        println!("\nExisting Registry Values:");
+        println!("\nExisting Registry Values");
         if let Ok(switch) = key.get_value::<String, _>("Switch") {
-            println!("Switch: {}", switch);
+            println!("  Switch: {}", switch);
         }
         if let Ok(port) = key.get_value::<String, _>("Port") {
-            println!("Port:   {}", port);
+            println!("  Port:   {}", port);
         }
         if let Ok(vlan) = key.get_value::<String, _>("Vlan") {
-            println!("Vlan:   {}", vlan);
+            println!("  Vlan:   {}", vlan);
         }
     }
 }

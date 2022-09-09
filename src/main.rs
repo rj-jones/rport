@@ -15,7 +15,7 @@ mod lldp;
 mod nic;
 mod reg;
 
-const REGISTRY_PATH: &'static str = r"SOFTWARE\rport";
+const REGISTRY_PATH: &'static str = r"SOFTWARE\Medical West";
 
 fn main() {
     print_hklm(REGISTRY_PATH);
@@ -54,6 +54,7 @@ fn handle_fdp(bytes: &[u8]) {
         pdu.print();
         let mut entries = Vec::<Entry>::new();
         entries.push(Entry::new("Switch", &pdu.switch()));
+        entries.push(Entry::new("SwitchDisplay", &pdu.switch_display()));
         entries.push(Entry::new("Port", &pdu.switch_port));
         entries.push(Entry::new("Vlan", &pdu.vlan()));
 
@@ -74,6 +75,7 @@ fn handle_lldp(bytes: &[u8]) {
         pdu.print();
         let mut entries = Vec::<Entry>::new();
         entries.push(Entry::new("Switch", &pdu.system_description));
+        entries.push(Entry::new("SwitchDisplay", &pdu.system_description));
         entries.push(Entry::new("Port", &pdu.port_description));
         entries.push(Entry::new("Vlan", &pdu.vlan));
 

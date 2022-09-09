@@ -55,13 +55,16 @@ impl Nic {
                 }
             };
 
-            println!("\nListening on \"{}\"\n", &interface.name);
+            println!("\nListening on \"{}\"\n", Self::interface_string(interface));
 
             // Listen for the given duration.
             let start = Instant::now();
             loop {
                 if start.elapsed() >= duration {
-                    println!("\nFinished listening on \"{}\"\n", &interface.name);
+                    println!(
+                        "\nFinished listening on \"{}\"\n",
+                        Self::interface_string(interface)
+                    );
                     return;
                 }
 
@@ -80,9 +83,9 @@ impl Nic {
         let interfaces: Vec<NetworkInterface> = pnet_datalink::interfaces();
 
         // List all
-        println!("\nInterfaces: ");
+        println!("\nInterfaces");
         for i in &interfaces {
-            println!("{:?}", i);
+            println!("  {}", Self::interface_string(i));
         }
 
         let interfaces_wired: Vec<NetworkInterface> = interfaces
@@ -110,11 +113,26 @@ impl Nic {
             })
             .collect();
 
-        println!("\nWired Non-Virtual: ");
+        println!("\nWired Non-Virtual");
         for i in &interfaces_wired {
-            println!("{:?}", i);
+            println!("  {}", Self::interface_string(i));
         }
 
         self.interfaces_wired.clone_from(&interfaces_wired);
+    }
+
+    fn interface_string(i: &NetworkInterface) -> String {
+        let mut ipv4_string = String::new();
+        if !i.ips.is_empty() {
+            if i.ips[0].ip().is_ipv4() {
+                ipv4_string = i.ips[0].ip().to_string();
+            }
+        }
+
+        if ipv4_string.len() > 0 {
+            format!("({}) {}", ipv4_string, i.description)
+        } else {
+            format!("{}", i.description)
+        }
     }
 }
