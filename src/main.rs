@@ -61,6 +61,10 @@ fn handle_fdp(bytes: &[u8]) {
     if let Some(pdu) = FdpPdu::new(bytes) {
         pdu.print();
         let mut entries = Vec::<Entry>::new();
+        entries.push(Entry::new(
+            "LastWrite",
+            &chrono::offset::Utc::now().to_string(),
+        ));
         entries.push(Entry::new("Switch", &pdu.switch()));
         entries.push(Entry::new("SwitchDisplay", &pdu.switch_display()));
         entries.push(Entry::new("Port", &pdu.switch_port));
@@ -82,6 +86,10 @@ fn handle_lldp(bytes: &[u8]) {
     if let Some(pdu) = LldpPdu::new(bytes) {
         pdu.print();
         let mut entries = Vec::<Entry>::new();
+        entries.push(Entry::new(
+            "LastWrite",
+            &chrono::offset::Utc::now().to_string(),
+        ));
         entries.push(Entry::new("Switch", &pdu.system_description));
         entries.push(Entry::new("SwitchDisplay", &pdu.system_description));
         entries.push(Entry::new("Port", &pdu.port_description));

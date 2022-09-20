@@ -95,12 +95,13 @@ impl Nic {
             // Filter for wired, non-virtual interfaces
             .filter(|iface: &NetworkInterface| {
                 !iface.description.to_lowercase().contains("hyper")
-                    && !iface.description.to_lowercase().contains("virtual")
+                    && !iface.description.to_lowercase().contains("802.11")
+                    && !iface.description.to_lowercase().contains("bluetooth")
                     && !iface.description.to_lowercase().contains("loop")
+                    && !iface.description.to_lowercase().contains("virtual")
                     && !iface.description.to_lowercase().contains("wi-fi")
                     && !iface.description.to_lowercase().contains("wifi")
                     && !iface.description.to_lowercase().contains("wireless")
-                    && !iface.description.to_lowercase().contains("bluetooth")
             })
             // Filter out 0.0.0.0 addresses that are active.
             .filter(|iface: &NetworkInterface| {
