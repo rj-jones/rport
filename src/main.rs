@@ -15,7 +15,7 @@ mod lldp;
 mod nic;
 mod reg;
 
-const REGISTRY_PATH: &'static str = r"SOFTWARE\Medical West";
+const REGISTRY_PATH: &'static str = r"SOFTWARE\rport";
 
 fn main() {
     print_hklm(REGISTRY_PATH);
